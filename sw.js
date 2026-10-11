@@ -8,7 +8,7 @@
    new files instead of keeping the old copy.
    ========================================================================== */
 
-const CACHE_VERSION = 'moonlit-v1';
+const CACHE_VERSION = 'moonlit-v2';
 
 const FILES = [
   './',

@@ -443,6 +443,11 @@ button:disabled { cursor: default; }
 .dream-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: var(--scriptInk); }
 .feel-line { font-size: 13px; font-weight: 700; color: var(--scriptInk); }
 
+/* Speaking a dream: the microphone button glows and breathes while listening */
+.mic-btn.on { border-color: var(--accent); background: var(--tint2); animation: listen 1.8s ease-in-out infinite; }
+.dictate-interim { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--ink2); min-height: 1px; }
+.dictate-interim:empty { display: none; }
+
 /* Prompts list */
 .prompt-row { padding: 16px 4px; border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: flex-start; }
 .prompt-row .text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; line-height: 1.3; text-wrap: pretty; }
@@ -564,6 +569,11 @@ button:disabled { cursor: default; }
   15%  { opacity: 1; }
   80%  { opacity: 1; }
   100% { transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--r)); opacity: 0; }
+}
+
+@keyframes listen {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(243, 201, 214, .55); }
+  50%      { box-shadow: 0 0 0 8px rgba(243, 201, 214, 0), 0 0 22px rgba(243, 201, 214, .6); }
 }
 
 /* "Reduce motion" (in Settings) or the phone's own setting keeps everything still */

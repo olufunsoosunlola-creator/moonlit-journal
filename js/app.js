@@ -139,6 +139,7 @@ function flash(message) {
 }
 
 function go(screen, extra) {
+  stopDictation(); // leaving a screen always stops the microphone
   state.prev = state.screen;
   state.screen = screen;
   Object.assign(state, extra || {});
@@ -192,6 +193,73 @@ function addSymbol(text) {
   if (t && !dd.symbols.includes(t)) dd.symbols = dd.symbols.concat([t]);
   render();
   focusField('dreamDraft.symInput');
+}
+
+/* ---------- Speaking a dream (speech to text) ----------
+   Uses the browser's built-in speech recognition (the Web Speech API).
+   Words appear in the description as you speak; you can edit them after.
+   Note: the browser, not this app, turns speech into text. Chrome sends the
+   audio to Google to do this, and Safari may use Apple's servers. Only the
+   finished text is saved, and only on this phone. */
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const dictation = { listening: false, interim: '' }; // interim = words still being heard
+let recognizer = null;
+
+function dictationSupported() { return !!SpeechRecognition; }
+
+function startDictation() {
+  recognizer = new SpeechRecognition();
+  recognizer.lang = navigator.language || 'en-US';
+  recognizer.continuous = true;      // keep listening through pauses
+  recognizer.interimResults = true;  // show words while you're still speaking
+
+  recognizer.onresult = event => {
+    let interim = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const result = event.results[i];
+      if (result.isFinal) appendToDream(result[0].transcript);
+      else interim += result[0].transcript;
+    }
+    dictation.interim = interim;
+    Screens.updateDictation();
+  };
+  recognizer.onerror = event => {
+    if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+      flash('Microphone access is off. You can allow it in your browser settings.');
+    } else if (event.error === 'no-speech') {
+      flash("I didn't hear anything. Tap the microphone to try again.");
+    }
+  };
+  // Listening ends when you tap stop, after a long silence, or on an error.
+  recognizer.onend = () => {
+    dictation.listening = false;
+    dictation.interim = '';
+    recognizer = null;
+    Screens.updateDictation();
+  };
+
+  try {
+    recognizer.start();
+    dictation.listening = true;
+  } catch (err) {
+    recognizer = null;
+    flash("The microphone couldn't start. Try again in a moment.");
+  }
+  Screens.updateDictation();
+}
+
+function stopDictation() {
+  if (recognizer) recognizer.stop();
+}
+
+// Adds a finished phrase to the end of the dream description.
+function appendToDream(text) {
+  const dd = state.dreamDraft;
+  text = text.trim();
+  if (!dd || !text) return;
+  const needsSpace = dd.description && !/\s$/.test(dd.description);
+  dd.description += (needsSpace ? ' ' : '') + text;
 }
 
 function focusField(name) {
@@ -447,11 +515,15 @@ const actions = {
     dd.feelings = dd.feelings.includes(f) ? dd.feelings.filter(x => x !== f) : dd.feelings.concat([f]);
     render();
   },
+  toggleDictation() {
+    if (dictation.listening) stopDictation(); else startDictation();
+  },
   addSymbolSuggestion(ds) { addSymbol(ds.value); },
   addSymbolFromInput() { addSymbol(state.dreamDraft.symInput); },
   removeSymbol(ds) { state.dreamDraft.symbols = state.dreamDraft.symbols.filter(s => s !== ds.value); render(); },
   cancelDream() { go(state.dreamDraft && state.dreamDraft.id ? 'dreamRead' : 'dreams', { dreamDraft: null }); },
   saveDream() {
+    stopDictation();
     const dd = state.dreamDraft, d = state.data;
     if (!dd || !(dd.title.trim() || dd.description.trim())) return;
     const id = dd.id || Data.uid();
@@ -643,7 +715,7 @@ document.addEventListener('change', e => {
 // When the app is hidden, lock the private pages again; when it comes back,
 // redraw (the time of day, and so the colors, may have changed).
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { state.unlocked = false; state.pin = ''; }
+  if (document.hidden) { state.unlocked = false; state.pin = ''; stopDictation(); }
   else { tickTimer(); render(); }
 });
 

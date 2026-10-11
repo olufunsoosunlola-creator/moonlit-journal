@@ -396,7 +396,14 @@ const Screens = (function () {
       <label class="field caps">Date
         <input class="input" type="date" data-field="dreamDraft.date" value="${esc(dd.date)}" style="text-transform:none;letter-spacing:0;font-weight:400"></label>
       <input class="title-input" data-field="dreamDraft.title" value="${esc(dd.title)}" placeholder="Give the dream a name">
-      <textarea class="textarea" style="min-height:220px" data-field="dreamDraft.description" placeholder="What happened? Fragments are enough.">${esc(dd.description)}</textarea>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <textarea class="textarea" id="dream-desc" style="min-height:220px" data-field="dreamDraft.description" placeholder="What happened? Fragments are enough.">${esc(dd.description)}</textarea>
+        ${dictationSupported() ? `
+          <button class="btn btn-soft mic-btn ${dictation.listening ? 'on' : ''}" id="mic-btn" style="align-self:flex-start" data-action="toggleDictation" aria-pressed="${dictation.listening}">
+            ${Icons.mic}<span>${dictation.listening ? 'Listening… tap to stop' : 'Speak your dream'}</span></button>
+          <div id="dictate-interim" class="dictate-interim">${esc(dictation.interim)}</div>`
+        : '<div class="muted small">Tip: tap the microphone on your keyboard to speak instead of typing.</div>'}
+      </div>
       <div style="display:flex;flex-direction:column;gap:10px"><div class="caps">How it felt</div>
         <div class="chips">${D.FEELINGS.map(f => chip(f, dd.feelings.includes(f), 'toggleFeeling', `data-value="${f}"`, 'glow')).join('')}</div></div>
       <div style="display:flex;flex-direction:column;gap:10px"><div class="caps">Symbols &amp; people</div>
@@ -726,6 +733,22 @@ const Screens = (function () {
     if (hint) hint.hidden = draftCanSave();
   }
 
+  // Updates just the microphone button and the words-in-progress line,
+  // so speaking never redraws the page or moves your cursor.
+  function updateDictation() {
+    const btn = document.getElementById('mic-btn');
+    if (btn) {
+      btn.classList.toggle('on', dictation.listening);
+      btn.setAttribute('aria-pressed', dictation.listening);
+      btn.querySelector('span').textContent = dictation.listening ? 'Listening… tap to stop' : 'Speak your dream';
+    }
+    const interim = document.getElementById('dictate-interim');
+    if (interim) interim.textContent = dictation.interim;
+    const box = document.getElementById('dream-desc');
+    if (box && state.dreamDraft && box.value !== state.dreamDraft.description) box.value = state.dreamDraft.description;
+    refreshSaveButtons();
+  }
+
   // A gentle windswept drift when a new prompt appears.
   function drift(selector) {
     const el = document.querySelector(selector);
@@ -739,7 +762,7 @@ const Screens = (function () {
 
   const SCREENS = { home, journal, reader, editor, mood, settings, dreams, dreamRead, dreamEdit, prompts, study, savings };
 
-  return { SCREENS, nav, overlays, lock, promptPool, updateTimer, refreshSaveButtons, drift };
+  return { SCREENS, nav, overlays, lock, promptPool, updateTimer, refreshSaveButtons, updateDictation, drift };
 })();
 
 /* ---------- render(): draw the current screen ---------- */

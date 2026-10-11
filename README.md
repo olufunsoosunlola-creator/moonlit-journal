@@ -13,13 +13,16 @@ The look comes from three images: a glowing pink lily on dusty mauve, pink foxta
 | **Home** | Greets you by time of day. **Morning:** "Record a dream" while it's fresh. **Afternoon:** your 45-minute focus timer, ready to start. **Night:** tonight's prompt with "Begin tonight's entry". It shows a soft banner on paydays and a warm "welcome back" after a few quiet days. Quick capture lets you log *just a mood*, *one line*, or a *rest day*. |
 | **Journal** | Write, edit and delete dated entries. Tag each one with a mood and your own tags, and filter by tag. |
 | **Mood** | A monthly calendar where each day takes the color of its mood. Days with no entry stay softly blank; nothing is ever marked as missed. Tap a day to open its entry, or mark it as a rest day. You also see your most common mood and how it compares with last month. |
-| **Dreams** | Record dreams with a date, title, description, feelings (peaceful, vivid, unsettling, lucid, recurring) and symbols or people. "Patterns in the night" gathers symbols that come back again and again. |
+| **Dreams** | Record dreams with a date, title, description, feelings (peaceful, vivid, unsettling, lucid, recurring) and symbols or people. Tap **Speak your dream** to say it out loud instead of typing. "Patterns in the night" gathers symbols that come back again and again. |
 | **Prompts** | 150 contemplative prompts in six themes: Mysticism, Theology as wonder, Spirit & intuition, Manifestation & intention, Prayer as conversation, and Poetic reflection. You get a daily prompt and a "new prompt" button, can filter by theme, save favorites with a daisy, and start a journal entry from any prompt. |
 | **Study** | A focus timer shown as a glowing ring over swaying grass. Focus lasts 45, 50, 60, 75 or 90 minutes, with a 10 or 15 minute rest. Sessions are labeled by subject and saved automatically. Soft hill-shaped charts show your time by day, week and subject, and keepsakes (petals, daisies, moons, lilies) mark milestones. |
 | **Savings** | Paydays fall every other Friday, starting October 16, 2026. You get a countdown, a payday calendar and a note for months that hold three paydays. Log each deposit by hand with an amount, date and note. A meadow hill fills as you reach your monthly goal, a chart shows each month, and a bloom of petals celebrates reaching the goal. |
 | **Settings** (⚙ on Home) | Choose Auto, Day or Night light. Turn on reduced motion. Set an optional 4-digit passcode for your journal, mood and dream pages. Export a backup, import a backup, and clear (or reload) the sample month. |
 
 **Gentle by design:** there are no streaks and no guilt. Progress is counted as *days journaled this month*, rest days are welcome, and missing a day never resets anything.
+
+### Speaking a dream
+The microphone button in the dream editor uses your browser's built-in speech recognition, so the words appear as you talk. Only the finished text is saved, and only on your phone. The browser does the listening, though: **Chrome sends the audio to Google, and Safari may use Apple's servers** to turn it into text. If your browser doesn't support it, the app suggests your keyboard's own microphone instead.
 
 ### Sample data
 The first time you open the app it shows a month of realistic sample pages (Sept–Oct 2026), so you can explore every screen. When you're ready to begin for real, go to **Settings → Sample month → Clear sample data**. Only the sample rows are removed; anything you wrote yourself stays.
