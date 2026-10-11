@@ -656,7 +656,7 @@ const Screens = (function () {
   }
 
   /* ======================= NAV + OVERLAYS ======================= */
-  const NAV = [['home', 'Home', 'home'], ['journal', 'Journal', 'feather'], ['mood', 'Mood', 'wave'], ['dreams', 'Dreams', 'moon'],
+  const NAV = [['home', 'Home', 'home'], ['journal', 'Journal', 'feather'], ['mood', 'Mood', 'wave'], ['garden', 'Garden', 'garden'], ['dreams', 'Dreams', 'moon'],
     ['prompts', 'Prompts', null], ['study', 'Study', 'hourglass'], ['savings', 'Savings', 'sprout']];
   function nav() {
     const s = state.screen;
@@ -760,7 +760,73 @@ const Screens = (function () {
     ], { duration: 1100, easing: 'cubic-bezier(.2,.7,.2,1)' });
   }
 
-  const SCREENS = { home, journal, reader, editor, mood, settings, dreams, dreamRead, dreamEdit, prompts, study, savings };
+  /* ======================= GARDEN ======================= */
+  function garden() {
+    const v = Garden.view, m = Garden.getModel();
+    if (m.empty) {
+      return `<div class="page-head" style="display:block">${kicker('the garden')}<h1 class="page-title">Your thoughts, growing</h1></div>
+      <div class="card" style="margin:22px 16px;padding:24px"><div class="serif" style="font-size:24px">Your garden is waiting for its first seed.</div>
+        <div class="muted" style="font-size:15px">Each journal page becomes a glowing thought here, and your tags become its roots.</div></div>`;
+    }
+    const nT = m.thoughts.filter(t => t.day <= v.t).length;
+    const sel = v.selected && m.thoughts.find(t => t.id === v.selected);
+    const reduce = Garden.reducedMotion();
+    const canLapse = m.lastDay > 0;
+
+    // The card for a tapped thought
+    const card = sel ? `<div class="card garden-card">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+          <div class="kicker" style="font-size:19px">${D.scriptDate(sel.entry.date)}</div>
+          ${sel.entry.mood ? `<span class="muted small" style="display:flex;align-items:center;gap:6px"><span class="dot-sm" style="background:${sel.color}"></span>${sel.entry.mood}</span>` : ''}</div>
+        ${sel.entry.title ? `<div class="entry-title">${esc(sel.entry.title)}</div>` : ''}
+        <div class="clamp">${esc(sel.entry.body || '(a mood only)')}</div>
+        ${(sel.entry.tags || []).length ? `<div class="tags-line">${sel.entry.tags.map(t => '#' + esc(t)).join('  ')}</div>` : ''}
+        <button class="write-link" style="align-self:flex-start" data-action="openEntry" data-id="${esc(sel.id)}">Read the whole page</button>
+      </div>` : '';
+
+    // Time-Lapse panel along the bottom
+    let panel = '';
+    if (v.lapse) {
+      const pct = d => (m.lastDay ? (d / m.lastDay) * 100 : 0);
+      const controls = reduce
+        ? `<button class="icon-btn" data-action="gardenStep" data-weeks="-1" aria-label="Previous week">${Icons.prev}</button>
+           <div class="muted small" style="flex:1;text-align:center">Step through week by week</div>
+           <button class="icon-btn" data-action="gardenStep" data-weeks="1" aria-label="Next week">${Icons.next}</button>`
+        : `<button class="play-btn" data-action="gardenPlay" aria-label="${v.playing ? 'Pause' : 'Play'}">${v.playing ? Icons.pause : Icons.play}</button>
+           <div class="speed">${[['slow', 'Slow'], ['gentle', 'Gentle'], ['swift', 'Swift']].map(([k, l]) =>
+             `<button class="${v.speed === k ? 'on' : ''}" data-action="gardenSpeed" data-value="${k}">${l}</button>`).join('')}</div>`;
+      panel = `<div class="lapse-panel">
+        <div class="lapse-date" id="g-date">${Garden.weekLabel(v.t)}</div>
+        <div class="lapse-track">
+          <div class="lapse-markers">${m.markers.map(mk =>
+            `<span class="marker ${mk.kind}" style="left:${pct(mk.day)}%" title="${esc(mk.label)}"></span>`).join('')}</div>
+          <input type="range" id="g-slider" min="0" max="${m.lastDay}" step="1" value="${v.t}" aria-label="Garden date">
+        </div>
+        <div class="lapse-controls">${controls}</div>
+      </div>`;
+    }
+
+    const below = v.lapse && !v.playing
+      ? (v.ended ? '' : `<div class="card garden-card week-card"><div class="caps">${Garden.weekLabel(v.t)}</div>
+          <div class="serif" style="font-size:20px;line-height:1.25">${esc(Garden.weekSummary(v.t))}</div>
+          <div class="muted small">Tap any glowing point to read it.</div></div>`)
+      : '';
+
+    return `<div class="page-head">
+      <div>${kicker(v.lapse ? 'time-lapse' : 'the garden')}<h1 class="page-title">${v.lapse ? 'Watch it grow' : 'Your thoughts, growing'}</h1></div>
+      ${v.lapse
+        ? '<button class="btn btn-accent" style="flex:none" data-action="gardenClose">Return to today</button>'
+        : canLapse ? `<button class="icon-btn lapse-btn" data-action="gardenOpen" aria-label="Time-lapse: watch your garden grow">${Icons.hourglass}</button>` : ''}
+    </div>
+    <div class="garden-wrap ${v.lapse ? 'lapse' : ''}">
+      <canvas id="garden-canvas" class="garden-canvas" role="img" aria-label="Your garden: ${nT} thoughts"></canvas>
+      ${v.ended ? '<div class="grown-line">Look how much you\'ve grown.</div>' : ''}
+    </div>
+    ${v.lapse ? '' : `<div class="muted small" style="padding:10px 22px 0;text-align:center">${m.thoughts.length} thoughts · ${m.roots.length} roots · ${m.threads.length} threads. Tap a glowing point to read it.</div>`}
+    ${card}${below}${panel}`;
+  }
+
+  const SCREENS = { home, garden, journal, reader, editor, mood, settings, dreams, dreamRead, dreamEdit, prompts, study, savings };
 
   return { SCREENS, nav, overlays, lock, promptPool, updateTimer, refreshSaveButtons, updateDictation, drift };
 })();
@@ -774,4 +840,5 @@ function render() {
   document.getElementById('app').innerHTML = screen();
   document.getElementById('nav').innerHTML = Screens.nav();
   document.getElementById('overlays').innerHTML = Screens.overlays();
+  if (state.screen === 'garden' && !isLocked()) Garden.mount();
 }

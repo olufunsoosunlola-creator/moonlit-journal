@@ -13,6 +13,7 @@ The look comes from three images: a glowing pink lily on dusty mauve, pink foxta
 | **Home** | Greets you by time of day. **Morning:** "Record a dream" while it's fresh. **Afternoon:** your 45-minute focus timer, ready to start. **Night:** tonight's prompt with "Begin tonight's entry". It shows a soft banner on paydays and a warm "welcome back" after a few quiet days. Quick capture lets you log *just a mood*, *one line*, or a *rest day*. |
 | **Journal** | Write, edit and delete dated entries. Tag each one with a mood and your own tags, and filter by tag. |
 | **Mood** | A monthly calendar where each day takes the color of its mood. Days with no entry stay softly blank; nothing is ever marked as missed. Tap a day to open its entry, or mark it as a rest day. You also see your most common mood and how it compares with last month. |
+| **Garden** | Your journal as a glowing garden. Each entry is a point of light in its mood's color, each tag is a root that its thoughts gather around, and entries sharing a tag are joined by silk threads. Tap a point to read it. The ⧗ button opens **Time-Lapse**. |
 | **Dreams** | Record dreams with a date, title, description, feelings (peaceful, vivid, unsettling, lucid, recurring) and symbols or people. Tap **Speak your dream** to say it out loud instead of typing. "Patterns in the night" gathers symbols that come back again and again. |
 | **Prompts** | 150 contemplative prompts in six themes: Mysticism, Theology as wonder, Spirit & intuition, Manifestation & intention, Prayer as conversation, and Poetic reflection. You get a daily prompt and a "new prompt" button, can filter by theme, save favorites with a daisy, and start a journal entry from any prompt. |
 | **Study** | A focus timer shown as a glowing ring over swaying grass. Focus lasts 45, 50, 60, 75 or 90 minutes, with a 10 or 15 minute rest. Sessions are labeled by subject and saved automatically. Soft hill-shaped charts show your time by day, week and subject, and keepsakes (petals, daisies, moons, lilies) mark milestones. |
@@ -21,11 +22,21 @@ The look comes from three images: a glowing pink lily on dusty mauve, pink foxta
 
 **Gentle by design:** there are no streaks and no guilt. Progress is counted as *days journaled this month*, rest days are welcome, and missing a day never resets anything.
 
+### Time-Lapse (in the Garden)
+Tap the hourglass in the Garden's corner to watch your garden grow from your first thought to today.
+- **Watching:** a slider spans your whole history, so drag it to see the garden exactly as it was on any date. Play animates the growth at Slow, Gentle (about one week per second) or Swift speed. The week you're on floats above the slider.
+- **How things grow:** new thoughts bloom from a tiny spark, threads spin themselves between them, and roots swell and brighten as thoughts gather. Now and then a faint ripple of light passes through, like breath. At the end you'll see: *"Look how much you've grown."*
+- **Pausing:** when paused, a card sums up that week (for example, "4 thoughts planted · 1 new root: #mysticism."), and you can tap any point to read it. Small marks on the slider show when each new root appeared, and the brightest one marks your busiest week.
+- **Reduced motion:** blooms become simple fades, and arrow buttons step week by week instead of playback.
+- **Leaving:** **Return to today** takes you back to the normal Garden.
+
+The garden is rebuilt from the dates already saved on your entries, so it needs no extra storage. A tag's root is "born" with its first entry, and a thread with the later of the two entries it joins.
+
 ### Speaking a dream
 The microphone button in the dream editor uses your browser's built-in speech recognition, so the words appear as you talk. Only the finished text is saved, and only on your phone. The browser does the listening, though: **Chrome sends the audio to Google, and Safari may use Apple's servers** to turn it into text. If your browser doesn't support it, the app suggests your keyboard's own microphone instead.
 
 ### Sample data
-The first time you open the app it shows a month of realistic sample pages (Sept–Oct 2026), so you can explore every screen. When you're ready to begin for real, go to **Settings → Sample month → Clear sample data**. Only the sample rows are removed; anything you wrote yourself stays.
+The first time you open the app it shows about four months of realistic sample pages (June–October 2026), so the Garden's time-lapse has real growth to show, so you can explore every screen. When you're ready to begin for real, go to **Settings → Sample month → Clear sample data**. Only the sample rows are removed; anything you wrote yourself stays.
 
 ### Backup & restore
 - **Export backup** downloads a `.json` file with all your data (but never your passcode).
@@ -80,6 +91,7 @@ css/styles.css        all styling; day/night palettes are CSS variables
 js/data.js            moods, the 150 prompts, sample month, date & payday helpers
 js/storage.js         load/save to localStorage, export & import backups
 js/icons.js           the line icons as SVG
+js/garden.js          the Garden: builds it from your entries, draws it on a canvas, runs Time-Lapse
 js/screens.js         one function per screen that turns state into HTML, plus render()
 js/app.js             the state, the actions buttons trigger, the timer, event wiring
 assets/               lily, grass and meadow images, plus the fonts (offline-ready)

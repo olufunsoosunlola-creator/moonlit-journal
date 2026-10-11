@@ -46,6 +46,9 @@ const Icons = (function () {
     next: line('<path d="m9 18 6-6-6-6"/>', 20, 1.7),
     plus: line('<path d="M5 12h14"/><path d="M12 5v14"/>', 18, 1.8),
     close: line('<path d="M18 6 6 18"/><path d="m6 6 12 12"/>', 14, 2),
+    garden: line('<circle cx="6" cy="17" r="2"/><circle cx="12" cy="6.5" r="2"/><circle cx="18" cy="15" r="2"/><path d="M7 15.2 11 8.3"/><path d="m13.2 8.2 3.7 5.1"/><path d="M8 16.6l8-1.2"/>'),
+    play: line('<path d="M7 4.5v15l12-7.5z"/>', 20, 1.6),
+    pause: line('<path d="M8 5v14"/><path d="M16 5v14"/>', 20, 1.8),
     mic: line('<path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/>', 20, 1.6),
     refresh: line('<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>', 18, 1.7)
   };

@@ -8,7 +8,7 @@
    new files instead of keeping the old copy.
    ========================================================================== */
 
-const CACHE_VERSION = 'moonlit-v2';
+const CACHE_VERSION = 'moonlit-v3';
 
 const FILES = [
   './',
@@ -18,6 +18,7 @@ const FILES = [
   './js/data.js',
   './js/storage.js',
   './js/icons.js',
+  './js/garden.js',
   './js/screens.js',
   './js/app.js',
   './assets/lily.jpg',

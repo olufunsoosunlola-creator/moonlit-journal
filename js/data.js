@@ -316,7 +316,29 @@ const Data = (function () {
      "Clear sample data" finds and removes only these rows. */
 
   const SAMPLE_ENTRIES = [
-    ['2025-10-10', '21:30', 'hopeful', 'A year from now', 'I wonder who I will be by next autumn. I hope she is softer with herself, and still keeping some kind of journal.', ['beginnings']],
+    // Early summer: the garden's first seeds
+    ['2026-06-14', '21:30', 'hopeful', 'A year from now', 'I wonder who I will be by next summer. I hope she is softer with herself, and still keeping some kind of journal.', ['beginnings']],
+    ['2026-06-18', '22:00', 'calm', 'Long light', 'It stayed light until almost ten. Sat on the step with tea and watched the sky turn peach.', ['evening']],
+    ['2026-06-23', '21:45', 'restless', '', 'Signed up for the SQL course. Excited and a little scared I won\'t keep up.', ['SQL', 'beginnings']],
+    ['2026-06-28', '21:10', 'grateful', 'Sunday call', 'Long call with Mom. She told the story about the plum tree again and I let her.', ['family']],
+    ['2026-07-03', '22:20', 'hopeful', 'The cloud of unknowing', 'Started reading about the medieval mystics. Loving what you cannot fully see. I think I understand that more than I can say.', ['mysticism', 'reading']],
+    ['2026-07-07', '21:00', 'tired', '', 'First week of the course. My brain feels like a full sponge.', ['SQL']],
+    ['2026-07-11', '22:40', 'calm', 'Full moon', 'Full moon over the parking lot of all places. Still beautiful. Made a small wish.', ['moon', 'mysticism']],
+    ['2026-07-16', '21:20', 'joyful', '', 'Wrote my first JOIN that worked on the first try. Told the cat.', ['SQL']],
+    ['2026-07-19', '21:50', 'grateful', 'Lena\'s garden', 'Lena gave me a cutting from her jasmine. It smells like her porch.', ['friends']],
+    ['2026-07-24', '22:10', 'anxious', '', 'Work is loud lately. Lit a candle and sat with the quiet for ten minutes before bed.', ['work', 'prayer']],
+    ['2026-07-29', '21:35', 'hopeful', 'Seeds in the dark', 'Read that some seeds wait years for the right rain. I am trying to be patient like that.', ['reading', 'beginnings']],
+    ['2026-08-02', '21:05', 'calm', 'Evening walk', 'Walked the long field path. The foxtail grass is turning pink.', ['walk']],
+    ['2026-08-06', '22:30', 'sad', '', 'Grandma\'s birthday. I made lemon cake and cried a little into the batter.', ['family']],
+    ['2026-08-09', '21:40', 'hopeful', 'New moon', 'New moon. Wrote down three things I want to plant this autumn.', ['moon', 'mysticism']],
+    ['2026-08-13', '21:15', 'joyful', '', 'Started Python on the side. Loops make sense in a way that feels like music.', ['Python']],
+    ['2026-08-17', '22:00', 'grateful', 'Small prayer', 'Said thank you out loud tonight for no particular reason. It felt like opening a window.', ['prayer']],
+    ['2026-08-21', '21:25', 'calm', '', 'Moved a little into savings. Skipped takeout twice this week to do it.', ['savings']],
+    ['2026-08-25', '21:55', 'restless', '', 'Couldn\'t sit still. Walked until the streetlights came on.', ['walk']],
+    ['2026-08-29', '22:15', 'hopeful', 'The veil', 'Late summer evenings feel thin, like something just behind the air is listening.', ['mysticism']],
+    ['2026-09-02', '21:30', 'tired', '', 'Back-to-routine week. Python after work, then straight to bed.', ['Python', 'work']],
+    ['2026-09-05', '21:45', 'grateful', '', 'Pottery class with Lena. We laughed the whole time.', ['friends']],
+    // Autumn
     ['2026-09-08', '21:40', 'hopeful', 'First page', 'Starting this little book again. I want somewhere quiet to set the day down before sleep.', ['beginnings']],
     ['2026-09-09', '22:05', 'tired', '', 'Three hours on joins and my eyes are done. Grateful for the tea Mom left on the counter.', ['SQL', 'family']],
     ['2026-09-11', '21:15', 'calm', 'Evening walk', 'Walked the long way home past the field behind the library. The grass has gone pink at the tips.', ['walk']],

@@ -41,6 +41,10 @@ const Storage = (function () {
     };
   }
 
+  // Raise this when the sample data changes, so phones still showing
+  // the older sample get the new one.
+  const SAMPLE_VERSION = 2;
+
   // Adds the sample month to some data (replacing any older sample rows).
   function withSample(data) {
     const sample = Data.sampleRows();
@@ -49,6 +53,7 @@ const Storage = (function () {
       const yours = (data[table] || []).filter(row => !row.sample);
       out[table] = yours.concat(sample[table]);
     }
+    out.settings = Object.assign({}, data.settings, { sample_version: SAMPLE_VERSION });
     return out;
   }
 
@@ -80,7 +85,12 @@ const Storage = (function () {
   function load() {
     try {
       const text = localStorage.getItem(KEY);
-      if (text) return normalise(JSON.parse(text));
+      if (text) {
+        const data = normalise(JSON.parse(text));
+        // Still showing an older sample? Swap in the current one (your own rows stay).
+        if (hasSample(data) && data.settings.sample_version !== SAMPLE_VERSION) return withSample(data);
+        return data;
+      }
     } catch (err) {
       console.warn('Could not read saved data', err);
     }

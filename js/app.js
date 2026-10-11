@@ -75,7 +75,8 @@ function period() {
 
 // Night palette: chosen in Settings, or automatically after 6pm.
 // The Dream Journal always wears the mauve night colors.
-const DREAM_SCREENS = ['dreams', 'dreamRead', 'dreamEdit'];
+// (The Garden glows best at dusk too, so it shares the night palette.)
+const DREAM_SCREENS = ['dreams', 'dreamRead', 'dreamEdit', 'garden'];
 function isNight() {
   const t = state.data.settings.theme;
   if (DREAM_SCREENS.includes(state.screen)) return true;
@@ -140,6 +141,7 @@ function flash(message) {
 
 function go(screen, extra) {
   stopDictation(); // leaving a screen always stops the microphone
+  if (screen !== 'garden') Garden.view.playing = false;
   state.prev = state.screen;
   state.screen = screen;
   Object.assign(state, extra || {});
@@ -372,6 +374,13 @@ const actions = {
     const p = state.prev;
     go(p === 'reader' || p === 'editor' || !p ? 'journal' : p);
   },
+
+  /* --- garden & time-lapse (see garden.js) --- */
+  gardenOpen() { Garden.open(); },
+  gardenClose() { Garden.close(); },
+  gardenPlay() { Garden.togglePlay(); },
+  gardenStep(ds) { Garden.step(Number(ds.weeks)); },
+  gardenSpeed(ds) { Garden.setSpeed(ds.value); },
 
   /* --- passcode keypad --- */
   pinKey(ds) {
