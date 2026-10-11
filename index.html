@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Moonlit Journal</title>
+  <meta name="description" content="A quiet, private sanctuary for reflection, dreams, prompts, focus and saving. Everything stays on your phone.">
+
+  <!-- Makes it installable and full-screen from the home screen -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#FBF8F1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Moonlit">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-day">
+  <!-- The current screen is drawn in here by js/screens.js -->
+  <main id="app" class="app"></main>
+
+  <!-- Bottom navigation -->
+  <nav id="nav" class="nav" aria-label="Sections"></nav>
+
+  <!-- Sheets, dialogs, messages and the goal bloom -->
+  <div id="overlays"></div>
+
+  <noscript><p style="padding:24px">Moonlit Journal needs JavaScript turned on.</p></noscript>
+
+  <!-- Order matters: each file uses the ones before it -->
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/screens.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
